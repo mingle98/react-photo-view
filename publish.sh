@@ -25,7 +25,7 @@ fi
 # 确认发布
 echo ""
 echo "📦 即将发布:"
-echo "   包名: react-photo-view-v2"
+echo "   包名: react-photo-view-vs2"
 echo "   版本: 1.3.0"
 echo "   用户: $NPM_USER"
 echo ""
