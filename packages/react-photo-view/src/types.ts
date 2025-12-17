@@ -76,6 +76,16 @@ export interface PhotoProviderBase {
    */
   bannerVisible?: boolean;
   /**
+   * 最小缩放倍数
+   * @defaultValue 1
+   */
+  minScale?: number;
+  /**
+   * 最大缩放倍数
+   * @defaultValue 6
+   */
+  maxScale?: number;
+  /**
    * 自定义渲染覆盖物
    */
   overlayRender?: (overlayProps: OverlayRenderProps) => React.ReactNode;

@@ -95,6 +95,8 @@ export default function PhotoSlider(props: IPhotoSliderProps) {
     photoWrapClassName,
     loadingElement,
     brokenElement,
+    minScale,
+    maxScale,
     images,
     index: controlledIndex = 0,
     onIndexChange: controlledIndexChange,
@@ -242,11 +244,13 @@ export default function PhotoSlider(props: IPhotoSliderProps) {
     const opacity =
       maskOpacity === null ? null : limitNumber(maskOpacity, 0.01, maskOpacity - Math.abs(clientY - lastCY) / 100 / 4);
 
+    // 使用配置的 minScale 或默认值 1 来判断最小状态
+    const currentMinScale = minScale ?? 1;
     updateState({
       touched: true,
       lastCY,
-      bg: nextScale === 1 ? opacity : maskOpacity,
-      minimal: nextScale === 1,
+      bg: nextScale === currentMinScale ? opacity : maskOpacity,
+      minimal: nextScale === currentMinScale,
     });
   }
 
@@ -404,6 +408,8 @@ export default function PhotoSlider(props: IPhotoSliderProps) {
             onMaskTap={() => handlePhotoTap(maskClosable)}
             wrapClassName={photoWrapClassName}
             className={photoClassName}
+            minScale={minScale}
+            maxScale={maxScale}
             style={{
               left: `${(innerWidth + horizontalOffset) * nextIndex}px`,
               transform: `translate3d(${x}px, 0px, 0)`,

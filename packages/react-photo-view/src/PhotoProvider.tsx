@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useImperativeHandle, forwardRef } from 'react';
 import type { DataType, PhotoProviderBase } from './types';
 import useMethods from './hooks/useMethods';
 import useSetState from './hooks/useSetState';
@@ -7,8 +7,27 @@ import PhotoSlider from './PhotoSlider';
 
 export interface PhotoProviderProps extends PhotoProviderBase {
   children: React.ReactNode;
+  /**
+   * 受控模式：是否显示预览
+   */
+  visible?: boolean;
+  /**
+   * 受控模式：当前索引
+   */
+  defaultIndex?: number;
   onIndexChange?: (index: number, state: PhotoProviderState) => void;
   onVisibleChange?: (visible: boolean, index: number, state: PhotoProviderState) => void;
+}
+
+export interface PhotoProviderRef {
+  /**
+   * 显示指定索引的图片
+   */
+  show: (index?: number) => void;
+  /**
+   * 关闭预览
+   */
+  close: () => void;
 }
 
 type PhotoProviderState = {
@@ -23,10 +42,17 @@ const initialState: PhotoProviderState = {
   index: 0,
 };
 
-export default function PhotoProvider({ children, onIndexChange, onVisibleChange, ...restProps }: PhotoProviderProps) {
+const PhotoProviderInner = forwardRef<PhotoProviderRef, PhotoProviderProps>(function PhotoProvider(
+  { children, visible: controlledVisible, defaultIndex = 0, onIndexChange, onVisibleChange, ...restProps },
+  ref,
+) {
   const [state, updateState] = useSetState(initialState);
   const uniqueIdRef = useRef(0);
-  const { images, visible, index } = state;
+  const { images, visible: innerVisible, index } = state;
+
+  // 判断是否为受控模式
+  const isControlled = controlledVisible !== undefined;
+  const visible = isControlled ? controlledVisible : innerVisible;
 
   const methods = useMethods({
     nextId() {
@@ -58,21 +84,30 @@ export default function PhotoProvider({ children, onIndexChange, onVisibleChange
     },
     show(key: number) {
       const currentIndex = images.findIndex((item) => item.key === key);
+      // 更新索引（无论是否受控）
       updateState({
-        visible: true,
         index: currentIndex,
       });
+      // 如果是非受控模式，更新 visible
+      if (!isControlled) {
+        updateState({
+          visible: true,
+        });
+      }
+      // 触发回调
       if (onVisibleChange) {
-        onVisibleChange(true, currentIndex, state);
+        onVisibleChange(true, currentIndex, { ...state, index: currentIndex });
       }
     },
   });
 
   const fn = useMethods({
     close() {
-      updateState({
-        visible: false,
-      });
+      if (!isControlled) {
+        updateState({
+          visible: false,
+        });
+      }
 
       if (onVisibleChange) {
         onVisibleChange(false, index, state);
@@ -89,6 +124,28 @@ export default function PhotoProvider({ children, onIndexChange, onVisibleChange
     },
   });
 
+  // 暴露给 ref 的方法
+  useImperativeHandle(ref, () => ({
+    show: (showIndex?: number) => {
+      const targetIndex = showIndex !== undefined ? showIndex : defaultIndex;
+      // 更新索引（无论是否受控）
+      updateState({
+        index: targetIndex,
+      });
+      // 如果是非受控模式，更新 visible
+      if (!isControlled) {
+        updateState({
+          visible: true,
+        });
+      }
+      // 触发回调
+      if (onVisibleChange) {
+        onVisibleChange(true, targetIndex, { ...state, index: targetIndex });
+      }
+    },
+    close: fn.close,
+  }));
+
   const value = useMemo(() => ({ ...state, ...methods }), [state, methods]);
 
   return (
@@ -104,4 +161,6 @@ export default function PhotoProvider({ children, onIndexChange, onVisibleChange
       />
     </PhotoContext.Provider>
   );
-}
+});
+
+export default PhotoProviderInner;

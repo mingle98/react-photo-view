@@ -7,7 +7,7 @@ import getRotateSize from './utils/getRotateSize';
 import { limitScale } from './utils/limitTarget';
 import getSuitableImageSize from './utils/getSuitableImageSize';
 import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
-import { minStartTouchOffset, scaleBuffer } from './variables';
+import { minStartTouchOffset, scaleBuffer, minScale as defaultMinScale, maxScale as defaultMaxScale } from './variables';
 import type {
   DataType,
   ReachMoveFunction,
@@ -49,6 +49,10 @@ export interface PhotoBoxProps {
   loadingElement?: JSX.Element;
   // 加载失败 Element
   brokenElement?: JSX.Element | ((photoProps: BrokenElementParams) => JSX.Element);
+  // 最小缩放倍数
+  minScale?: number;
+  // 最大缩放倍数
+  maxScale?: number;
 
   // Photo 点击事件
   onPhotoTap: PhotoTapFunction;
@@ -131,6 +135,8 @@ export default function PhotoBox({
   style,
   loadingElement,
   brokenElement,
+  minScale = defaultMinScale,
+  maxScale = defaultMaxScale,
 
   onPhotoTap,
   onMaskTap,
@@ -172,7 +178,7 @@ export default function PhotoBox({
   } = state;
 
   const fn = useMethods({
-    onScale: (current: number) => onScale(limitScale(current)),
+    onScale: (current: number) => onScale(limitScale(current, 0, 0, minScale, maxScale)),
     onRotate(current: number) {
       if (rotate !== current) {
         expose({ rotate: current });
@@ -188,7 +194,7 @@ export default function PhotoBox({
       updateState({
         scale: current,
         ...getPositionOnMoveOrScale(x, y, width, height, scale, current, clientX, clientY),
-        ...(current <= 1 && { x: 0, y: 0 }),
+        ...(current <= minScale && { x: 0, y: 0 }),
       });
     }
   }
@@ -238,6 +244,8 @@ export default function PhotoBox({
           scale + ((currentTouchLength - touchLength) / 100 / 2) * scale,
           naturalWidth / width,
           scaleBuffer,
+          minScale,
+          maxScale,
         );
         // 导出变量
         expose({ scale: toScale });
@@ -280,7 +288,7 @@ export default function PhotoBox({
   const handlePhotoTap = useContinuousTap(onPhotoTap, (currentClientX: number, currentClientY: number) => {
     if (!reach) {
       // 若图片足够大，则放大适应的倍数
-      const endScale = scale !== 1 ? 1 : Math.max(2, naturalWidth / width);
+      const endScale = scale !== minScale ? minScale : Math.max(2, naturalWidth / width);
       onScale(endScale, currentClientX, currentClientY);
     }
   });
@@ -296,7 +304,7 @@ export default function PhotoBox({
         stopRaf: false,
         reach: undefined,
       });
-      const safeScale = limitScale(scale, naturalWidth / width);
+      const safeScale = limitScale(scale, naturalWidth / width, 0, minScale, maxScale);
       // Go
       slideToPosition(x, y, lastX, lastY, width, height, scale, safeScale, lastScale, rotate, touchTime);
 
@@ -382,7 +390,7 @@ export default function PhotoBox({
   function handleWheel(e: React.WheelEvent) {
     if (!reach) {
       // 限制最大倍数和最小倍数
-      const toScale = limitScale(scale - e.deltaY / 100 / 2, naturalWidth / width);
+      const toScale = limitScale(scale - e.deltaY / 100 / 2, naturalWidth / width, 0, minScale, maxScale);
       updateState({ stopRaf: true });
       onScale(toScale, e.clientX, e.clientY);
     }

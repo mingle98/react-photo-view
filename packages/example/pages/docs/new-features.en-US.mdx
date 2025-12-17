@@ -1,0 +1,80 @@
+---
+title: New Features
+---
+
+import DocScaleConfig from '../../components/doc-scale-config'
+import DocImperative from '../../components/doc-imperative'
+import DocAdvanced from '../../components/doc-advanced'
+
+# New Features
+
+## Custom Scale Range
+
+Use `minScale` and `maxScale` props to customize the image scale range. By default, images can only be scaled down to 1x (no smaller) and up to 6x. Now you can customize these values:
+
+<DocScaleConfig />
+
+---
+
+## Imperative Control
+
+Two ways to programmatically control the photo viewer:
+
+<DocImperative />
+
+---
+
+## Advanced Example
+
+Combining custom scale range with imperative control:
+
+<DocAdvanced />
+
+---
+
+## API Reference
+
+### PhotoProvider New Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `minScale` | `number` | `1` | Minimum scale value |
+| `maxScale` | `number` | `6` | Maximum scale value |
+| `visible` | `boolean` | - | Controlled mode: whether to show preview |
+| `defaultIndex` | `number` | `0` | Controlled mode: default index |
+| `ref` | `React.Ref<PhotoProviderRef>` | - | Ref for imperative control |
+
+### PhotoProviderRef Methods
+
+| Method | Parameters | Description |
+| --- | --- | --- |
+| `show` | `(index?: number) => void` | Show photo at specified index |
+| `close` | `() => void` | Close preview |
+
+### Usage Example
+
+```tsx
+import { useRef } from 'react';
+import { PhotoProvider, PhotoView, PhotoProviderRef } from 'react-photo-view';
+
+function App() {
+  const ref = useRef<PhotoProviderRef>(null);
+
+  return (
+    <>
+      <button onClick={() => ref.current?.show(0)}>Open Photo</button>
+
+      <PhotoProvider
+        ref={ref}
+        minScale={0.5}
+        maxScale={10}
+      >
+        <PhotoView src="/image.jpg">
+          <img src="/image.jpg" alt="" />
+        </PhotoView>
+      </PhotoProvider>
+    </>
+  );
+}
+```
+

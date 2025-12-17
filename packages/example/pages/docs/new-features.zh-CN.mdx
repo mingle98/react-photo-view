@@ -1,0 +1,80 @@
+---
+title: 新功能
+---
+
+import DocScaleConfig from '../../components/doc-scale-config'
+import DocImperative from '../../components/doc-imperative'
+import DocAdvanced from '../../components/doc-advanced'
+
+# 新功能示例
+
+## 自定义缩放范围
+
+通过 `minScale` 和 `maxScale` 属性可以自定义图片的缩放范围。默认情况下，图片最小只能缩放到 1 倍（无法缩小），最大可以放大到 6 倍。现在你可以自定义这些值：
+
+<DocScaleConfig />
+
+---
+
+## 命令式控制
+
+提供了两种方式来主动控制图片预览的打开和关闭。
+
+<DocImperative />
+
+---
+
+## 综合示例
+
+同时使用自定义缩放范围和命令式控制：
+
+<DocAdvanced />
+
+---
+
+## API 参考
+
+### PhotoProvider 新增属性
+
+| 属性 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| `minScale` | `number` | `1` | 最小缩放倍数 |
+| `maxScale` | `number` | `6` | 最大缩放倍数 |
+| `visible` | `boolean` | - | 受控模式：是否显示预览 |
+| `defaultIndex` | `number` | `0` | 受控模式：默认索引 |
+| `ref` | `React.Ref<PhotoProviderRef>` | - | Ref 引用，用于命令式控制 |
+
+### PhotoProviderRef 方法
+
+| 方法 | 参数 | 描述 |
+| --- | --- | --- |
+| `show` | `(index?: number) => void` | 显示指定索引的图片 |
+| `close` | `() => void` | 关闭预览 |
+
+### 使用示例
+
+```tsx
+import { useRef } from 'react';
+import { PhotoProvider, PhotoView, PhotoProviderRef } from 'react-photo-view';
+
+function App() {
+  const ref = useRef<PhotoProviderRef>(null);
+
+  return (
+    <>
+      <button onClick={() => ref.current?.show(0)}>打开图片</button>
+
+      <PhotoProvider
+        ref={ref}
+        minScale={0.5}
+        maxScale={10}
+      >
+        <PhotoView src="/image.jpg">
+          <img src="/image.jpg" alt="" />
+        </PhotoView>
+      </PhotoProvider>
+    </>
+  );
+}
+```
+

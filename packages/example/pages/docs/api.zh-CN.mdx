@@ -17,6 +17,11 @@ title: API
 | maskOpacity        | 默认背景透明度                 | number \| null                                                             | 1                                        |
 | pullClosable       | 下拉是否可关闭                 | boolean                                                                    | true                                     |
 | bannerVisible      | 导航条 visible                 | boolean                                                                    | true                                     |
+| **minScale** 🆕    | **最小缩放倍数**               | **number**                                                                 | **1**                                    |
+| **maxScale** 🆕    | **最大缩放倍数**               | **number**                                                                 | **6**                                    |
+| **visible** 🆕     | **受控模式：是否显示预览**     | **boolean**                                                                |                                          |
+| **defaultIndex** 🆕| **受控模式：默认索引**         | **number**                                                                 | **0**                                    |
+| **ref** 🆕         | **Ref 引用，用于命令式控制**   | **React.Ref&lt;PhotoProviderRef&gt;**                                      |                                          |
 | overlayRender      | 自定义渲染覆盖物               | \(overlayProps: OverlayRenderProps\) =&gt; React\.ReactNode                |
 | toolbarRender      | 自定义渲染工具栏               | \(overlayProps: OverlayRenderProps\) =&gt; React\.ReactNode                |
 | className          |                                | string                                                                     |
@@ -26,6 +31,15 @@ title: API
 | loadingElement     | 自定义 loading                 | JSX\.Element                                                               |
 | brokenElement      | 自定义加载失败渲染             | JSX\.Element \| \(\(photoProps: BrokenElementParams\) =&gt; JSX\.Element\) |
 | portalContainer    |                                | HTMLElement                                                                | document.body                            |
+
+### PhotoProviderRef 🆕
+
+通过 ref 可以访问以下方法：
+
+| Method | Description      | Type                        |
+| ------ | ---------------- | --------------------------- |
+| show   | 显示指定索引图片 | (index?: number) =&gt; void |
+| close  | 关闭预览         | () =&gt; void               |
 
 ## PhotoView
 

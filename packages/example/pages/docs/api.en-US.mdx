@@ -17,6 +17,11 @@ title: API
 | maskOpacity        | Default background transparency                                              | number \| null                                                             | 1                                        |
 | pullClosable       | Whether the drop down can be closed                                          | boolean                                                                    | true                                     |
 | bannerVisible      | Navigation bar visible                                                       | boolean                                                                    | true                                     |
+| **minScale** 🆕    | **Minimum scale value**                                                      | **number**                                                                 | **1**                                    |
+| **maxScale** 🆕    | **Maximum scale value**                                                      | **number**                                                                 | **6**                                    |
+| **visible** 🆕     | **Controlled mode: whether to show preview**                                 | **boolean**                                                                |                                          |
+| **defaultIndex** 🆕| **Controlled mode: default index**                                           | **number**                                                                 | **0**                                    |
+| **ref** 🆕         | **Ref for imperative control**                                               | **React.Ref&lt;PhotoProviderRef&gt;**                                      |                                          |
 | overlayRender      | Custom render overlays                                                       | \(overlayProps: OverlayRenderProps\) =&gt; React\.ReactNode                |
 | toolbarRender      | Customize the rendering toolbar                                              | \(overlayProps: OverlayRenderProps\) =&gt; React\.ReactNode                |
 | className          |                                                                              | string                                                                     |
@@ -26,6 +31,15 @@ title: API
 | loadingElement     | Custom loading                                                               | JSX\.Element                                                               |
 | brokenElement      | Custom loading failed rendering                                              | JSX\.Element \| \(\(photoProps: BrokenElementParams\) =&gt; JSX\.Element\) |
 | portalContainer    | Custom portal target (e.g. for usage in web components)                      | HTMLElement                                                                | document.body                            |
+
+### PhotoProviderRef 🆕
+
+Available methods via ref:
+
+| Method | Description           | Type                        |
+| ------ | --------------------- | --------------------------- |
+| show   | Show photo at index   | (index?: number) =&gt; void |
+| close  | Close preview         | () =&gt; void               |
 
 ## PhotoView
 
