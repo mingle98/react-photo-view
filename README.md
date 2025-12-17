@@ -1,10 +1,8 @@
-# react-photo-view
-
-**English** | [中文](./README.zh-CN.md)
+# react-photo-view-v2
 
 <div align="center">
 
-**An exquisite React photo preview component**
+**一款超精致的 React 图片预览组件**
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][downloads-url]
@@ -13,41 +11,41 @@
 
 ![example](./example.gif)
 
-[Documentation](https://react-photo-view.vercel.app) | [Change Log](https://react-photo-view.vercel.app/docs/change-log) | [中文文档](./README.zh-CN.md)
+[在线文档](https://react-photo-view.vercel.app) | [更新日志](https://react-photo-view.vercel.app/docs/change-log) | [English README](./README.md)
 
 </div>
 
 ---
 
-## ✨ Features
+## ✨ 特性
 
-- 🖼️ **Perfect Interaction** - Support touch gestures, drag/pan with physics effects, pinch to zoom
-- 🎬 **Smooth Animations** - Seamless transitions for open/close/rebound/edge interactions
-- 📱 **Responsive Design** - Automatically calculates the best initial size, adapts to all screens
-- 🎮 **Keyboard Navigation** - Arrow keys for switching, ESC to close, perfect for desktop
-- 🎨 **Highly Customizable** - Support custom `<video />`, `<iframe />` or any HTML element preview
-- 🔧 **Powerful API** - Imperative control, controlled mode, custom scale range and more
-- 🌐 **SSR Support** - Works with server-side rendering
-- 📦 **Lightweight** - Only 7KB Gzipped, built with TypeScript
-- 💡 **Easy to Use** - Simple API, get started in 5 minutes
+- 🖼️ **完美的交互体验** - 支持触摸手势，拖动/平移/物理效果滑动，双指指定位置放大/缩小
+- 🎬 **流畅的动画** - 全方面动画衔接，打开/关闭/回弹/触边，顺其自然的交互效果
+- 📱 **响应式设计** - 图像自适应，自动计算合适的初始大小，完美适配各种屏幕
+- 🎮 **键盘导航** - 支持方向键切换、ESC 关闭，完美适配桌面端
+- 🎨 **高度可定制** - 支持自定义 `<video />`、`<iframe />` 或任意 HTML 元素的预览
+- 🔧 **强大的 API** - 支持命令式控制、受控模式、自定义缩放范围等高级功能
+- 🌐 **SSR 支持** - 支持服务端渲染
+- 📦 **体积小巧** - 仅 7KB Gzipped，基于 TypeScript 开发
+- 💡 **简单易用** - API 设计简洁，5 分钟快速上手
 
 ---
 
-## 📦 Installation
+## 📦 安装
 
-### Using npm
+### 使用 npm
 
 ```bash
 npm install react-photo-view
 ```
 
-### Using yarn
+### 使用 yarn
 
 ```bash
 yarn add react-photo-view
 ```
 
-### Using pnpm
+### 使用 pnpm
 
 ```bash
 pnpm add react-photo-view
@@ -55,11 +53,11 @@ pnpm add react-photo-view
 
 ---
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
-### 1. Basic Usage
+### 1. 基本用法
 
-The simplest way to use, just 3 steps:
+最简单的使用方式，只需要 3 步：
 
 ```jsx
 import { PhotoProvider, PhotoView } from 'react-photo-view';
@@ -76,14 +74,14 @@ function App() {
 }
 ```
 
-**Explanation:**
-- `PhotoProvider` - Photo preview container, wraps images that need preview
-- `PhotoView` - Single image preview component, clicking its children triggers preview
-- Must import CSS file for proper display
+**说明：**
+- `PhotoProvider` - 图片预览容器，包裹需要预览的图片
+- `PhotoView` - 单个图片预览组件，点击其子元素会触发预览
+- 必须引入 CSS 文件才能正常显示
 
-### 2. Multiple Images
+### 2. 多图预览
 
-Display multiple images with automatic left/right navigation:
+展示多张图片，自动支持左右切换：
 
 ```jsx
 function Gallery() {
@@ -107,16 +105,16 @@ function Gallery() {
 }
 ```
 
-### 3. Custom Scale Range
+### 3. 自定义缩放范围
 
-Control the minimum and maximum zoom levels:
+控制图片的最小和最大缩放倍数：
 
 ```jsx
 function CustomScale() {
   return (
     <PhotoProvider 
-      minScale={0.5}  // Minimum zoom 0.5x
-      maxScale={10}   // Maximum zoom 10x
+      minScale={0.5}  // 最小可缩小到 0.5 倍
+      maxScale={10}   // 最大可放大到 10 倍
     >
       <PhotoView src="/image.jpg">
         <img src="/thumbnail.jpg" alt="" />
@@ -126,13 +124,13 @@ function CustomScale() {
 }
 ```
 
-**Use Cases:**
-- Set `minScale < 1` to allow zooming out smaller than screen size
-- Increase `maxScale` to view more details
+**使用场景：**
+- 设置 `minScale < 1` 可以让图片缩小到比屏幕适应尺寸更小
+- 增大 `maxScale` 可以查看更多细节
 
-### 4. Imperative Control
+### 4. 命令式控制
 
-Use Ref API to programmatically open or close preview:
+使用 Ref API 主动打开或关闭预览：
 
 ```jsx
 import { useRef } from 'react';
@@ -144,10 +142,10 @@ function ControlledGallery() {
   return (
     <>
       <button onClick={() => photoRef.current?.show(0)}>
-        Open First Image
+        打开第一张图片
       </button>
       <button onClick={() => photoRef.current?.close()}>
-        Close Preview
+        关闭预览
       </button>
 
       <PhotoProvider ref={photoRef}>
@@ -163,9 +161,9 @@ function ControlledGallery() {
 }
 ```
 
-### 5. Controlled Mode
+### 5. 受控模式
 
-Fully control the preview visibility state:
+完全控制预览的显示状态：
 
 ```jsx
 import { useState } from 'react';
@@ -177,7 +175,7 @@ function ControlledMode() {
   return (
     <>
       <button onClick={() => { setIndex(0); setVisible(true); }}>
-        View Image
+        查看图片
       </button>
 
       <PhotoProvider
@@ -196,48 +194,48 @@ function ControlledMode() {
 
 ---
 
-## 📖 Common Configuration
+## 📖 常用配置
 
-### PhotoProvider Props
+### PhotoProvider 属性
 
-| Prop | Description | Type | Default |
-|------|-------------|------|---------|
-| `minScale` | Minimum scale value | `number` | `1` |
-| `maxScale` | Maximum scale value | `number` | `6` |
-| `loop` | Enable loop preview | `boolean \| number` | `3` |
-| `maskClosable` | Close on backdrop click | `boolean` | `true` |
-| `photoClosable` | Close on photo click | `boolean` | `false` |
-| `pullClosable` | Close on pull down | `boolean` | `true` |
-| `bannerVisible` | Show navigation banner | `boolean` | `true` |
-| `visible` | Controlled mode: visibility | `boolean` | - |
-| `onVisibleChange` | Visibility change callback | `(visible: boolean, index: number) => void` | - |
-| `onIndexChange` | Index change callback | `(index: number) => void` | - |
+| 属性 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| `minScale` | 最小缩放倍数 | `number` | `1` |
+| `maxScale` | 最大缩放倍数 | `number` | `6` |
+| `loop` | 是否循环预览 | `boolean \| number` | `3` |
+| `maskClosable` | 点击背景是否关闭 | `boolean` | `true` |
+| `photoClosable` | 点击图片是否关闭 | `boolean` | `false` |
+| `pullClosable` | 下拉是否关闭 | `boolean` | `true` |
+| `bannerVisible` | 是否显示导航栏 | `boolean` | `true` |
+| `visible` | 受控模式：是否显示 | `boolean` | - |
+| `onVisibleChange` | 显示状态改变回调 | `(visible: boolean, index: number) => void` | - |
+| `onIndexChange` | 索引改变回调 | `(index: number) => void` | - |
 
-### PhotoProviderRef Methods
+### PhotoProviderRef 方法
 
-Available methods via `ref`:
+通过 `ref` 可以调用以下方法：
 
 ```typescript
 interface PhotoProviderRef {
-  show: (index?: number) => void;  // Show photo at index
-  close: () => void;                // Close preview
+  show: (index?: number) => void;  // 显示指定索引的图片
+  close: () => void;                // 关闭预览
 }
 ```
 
-### PhotoView Props
+### PhotoView 属性
 
-| Prop | Description | Type | Default |
-|------|-------------|------|---------|
-| `src` | Image source | `string` | - |
-| `overlay` | Custom overlay content | `ReactNode` | - |
-| `width` | Custom width | `number` | - |
-| `height` | Custom height | `number` | - |
+| 属性 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| `src` | 图片地址 | `string` | - |
+| `overlay` | 自定义覆盖层内容 | `ReactNode` | - |
+| `width` | 自定义宽度 | `number` | - |
+| `height` | 自定义高度 | `number` | - |
 
 ---
 
-## 💡 Usage Tips
+## 💡 使用技巧
 
-### 1. Different Thumbnail and Preview
+### 1. 不同的缩略图和预览图
 
 ```jsx
 <PhotoView src="/high-quality.jpg">
@@ -245,7 +243,7 @@ interface PhotoProviderRef {
 </PhotoView>
 ```
 
-### 2. Custom Trigger
+### 2. 自定义触发方式
 
 ```jsx
 <PhotoView src="/image.jpg" triggers={['onClick', 'onDoubleClick']}>
@@ -253,7 +251,7 @@ interface PhotoProviderRef {
 </PhotoView>
 ```
 
-### 3. Preview Video
+### 3. 预览视频
 
 ```jsx
 <PhotoView
@@ -267,14 +265,14 @@ interface PhotoProviderRef {
 </PhotoView>
 ```
 
-### 4. Add Image Description
+### 4. 添加图片描述
 
 ```jsx
 <PhotoView
   src="/image.jpg"
   overlay={
     <div style={{ padding: 20, color: 'white' }}>
-      Image description goes here
+      这是图片的描述信息
     </div>
   }
 >
@@ -282,13 +280,13 @@ interface PhotoProviderRef {
 </PhotoView>
 ```
 
-### 5. Disable Interactions
+### 5. 禁用某些交互
 
 ```jsx
 <PhotoProvider
-  maskClosable={false}    // Disable backdrop click
-  pullClosable={false}    // Disable pull to close
-  photoClosable={true}    // Enable photo click to close
+  maskClosable={false}    // 禁用点击背景关闭
+  pullClosable={false}    // 禁用下拉关闭
+  photoClosable={true}    // 启用点击图片关闭
 >
   {/* ... */}
 </PhotoProvider>
@@ -296,9 +294,9 @@ interface PhotoProviderRef {
 
 ---
 
-## 🎯 Use Cases
+## 🎯 使用场景
 
-### E-commerce Website
+### 电商网站
 
 ```jsx
 function ProductGallery({ product }) {
@@ -316,7 +314,7 @@ function ProductGallery({ product }) {
 }
 ```
 
-### Social Media
+### 社交媒体
 
 ```jsx
 function PostImages({ images }) {
@@ -334,7 +332,7 @@ function PostImages({ images }) {
 }
 ```
 
-### Photo Album
+### 相册应用
 
 ```jsx
 function Album({ photos }) {
@@ -343,7 +341,7 @@ function Album({ photos }) {
   return (
     <div>
       <button onClick={() => photoRef.current?.show(0)}>
-        Start Slideshow
+        幻灯片播放
       </button>
 
       <PhotoProvider 
@@ -367,17 +365,17 @@ function Album({ photos }) {
 
 ---
 
-## 🔧 Advanced Usage
+## 🔧 高级用法
 
-### Custom Toolbar
+### 自定义工具栏
 
 ```jsx
 <PhotoProvider
   toolbarRender={({ onScale, scale, rotate, onRotate }) => (
     <div className="custom-toolbar">
-      <button onClick={() => onScale(scale + 1)}>Zoom In</button>
-      <button onClick={() => onScale(scale - 1)}>Zoom Out</button>
-      <button onClick={() => onRotate(rotate + 90)}>Rotate</button>
+      <button onClick={() => onScale(scale + 1)}>放大</button>
+      <button onClick={() => onScale(scale - 1)}>缩小</button>
+      <button onClick={() => onRotate(rotate + 90)}>旋转</button>
     </div>
   )}
 >
@@ -385,23 +383,23 @@ function Album({ photos }) {
 </PhotoProvider>
 ```
 
-### Custom Loading
+### 自定义加载效果
 
 ```jsx
 <PhotoProvider
-  loadingElement={<div className="custom-loading">Loading...</div>}
+  loadingElement={<div className="custom-loading">加载中...</div>}
 >
   {/* ... */}
 </PhotoProvider>
 ```
 
-### Handle Load Error
+### 处理加载失败
 
 ```jsx
 <PhotoProvider
   brokenElement={
     <div className="custom-broken">
-      Failed to load image
+      图片加载失败
     </div>
   }
 >
@@ -411,9 +409,9 @@ function Album({ photos }) {
 
 ---
 
-## ⚙️ TypeScript Support
+## ⚙️ TypeScript 支持
 
-Full TypeScript type definitions:
+完整的 TypeScript 类型定义：
 
 ```typescript
 import type { 
@@ -424,30 +422,30 @@ import type {
   OverlayRenderProps 
 } from 'react-photo-view';
 
-// Using ref
+// 使用 ref
 const photoRef = useRef<PhotoProviderRef>(null);
 
-// Custom render function
+// 自定义渲染函数
 const overlayRender = (props: OverlayRenderProps) => {
-  return <div>{/* Custom content */}</div>;
+  return <div>{/* 自定义内容 */}</div>;
 };
 ```
 
 ---
 
-## ❓ FAQ
+## ❓ 常见问题
 
-### 1. Images not showing?
+### 1. 图片不显示？
 
-Make sure you've imported the CSS file:
+确保已经引入了 CSS 文件：
 
 ```js
 import 'react-photo-view/dist/react-photo-view.css';
 ```
 
-### 2. How to use high-quality images in preview?
+### 2. 如何在预览中使用高清图？
 
-Use different `src`:
+使用不同的 `src` 即可：
 
 ```jsx
 <PhotoView src="/high-quality.jpg">
@@ -455,9 +453,9 @@ Use different `src`:
 </PhotoView>
 ```
 
-### 3. How to disable preview for certain images?
+### 3. 如何禁用某些图片的预览？
 
-Simply don't wrap them with `PhotoView`:
+不使用 `PhotoView` 包裹即可：
 
 ```jsx
 <PhotoProvider>
@@ -465,16 +463,16 @@ Simply don't wrap them with `PhotoView`:
     <img src="/image1.jpg" alt="" />
   </PhotoView>
   
-  {/* This image won't be previewable */}
+  {/* 这张图片不会被预览 */}
   <img src="/image2.jpg" alt="" />
 </PhotoProvider>
 ```
 
-### 4. How to use in Next.js?
+### 4. 如何在 Next.js 中使用？
 
 ```jsx
-// app/page.tsx or pages/index.tsx
-'use client'; // If using App Router
+// app/page.tsx 或 pages/index.tsx
+'use client'; // 如果使用 App Router
 
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
@@ -488,9 +486,9 @@ export default function Page() {
 }
 ```
 
-### 5. Zoom too slow or fast?
+### 5. 缩放太慢或太快？
 
-Customize animation speed:
+可以自定义动画速度：
 
 ```jsx
 <PhotoProvider speed={(type) => (type === 1 ? 300 : 200)}>
@@ -500,48 +498,26 @@ Customize animation speed:
 
 ---
 
-## 🌐 Browser Compatibility
+## 🌐 浏览器兼容性
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers
-
----
-
-## 📚 Resources
-
-- [Documentation](https://react-photo-view.vercel.app)
-- [API Reference](https://react-photo-view.vercel.app/docs/api)
-- [Examples](https://react-photo-view.vercel.app/docs/getting-started)
-- [Change Log](https://react-photo-view.vercel.app/docs/change-log)
-- [GitHub Repository](https://github.com/MinJieLiu/react-photo-view)
+- Chrome (最新版)
+- Firefox (最新版)
+- Safari (最新版)
+- Edge (最新版)
+- 移动端浏览器
 
 ---
 
-## 🤝 Contributing
+## 📚 更多资源
 
-Issues and Pull Requests are welcome!
-
----
-
-## 📄 License
-
-Apache-2.0 © [MinJieLiu](https://github.com/MinJieLiu)
+- [完整文档](https://react-photo-view.vercel.app)
+- [API 参考](https://react-photo-view.vercel.app/docs/api)
+- [在线示例](https://react-photo-view.vercel.app/docs/getting-started)
+- [更新日志](https://react-photo-view.vercel.app/docs/change-log)
+- [GitHub 仓库](https://github.com/MinJieLiu/react-photo-view)
 
 ---
 
-## 🙏 Acknowledgments
+## 🤝 贡献
 
-Thanks to all contributors who have helped make this project better!
-
----
-
-[npm-image]: https://img.shields.io/npm/v/react-photo-view.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/react-photo-view
-[downloads-image]: http://img.shields.io/npm/dm/react-photo-view.svg?style=flat-square
-[downloads-url]: https://npmjs.org/package/react-photo-view
-[min-size-image]: https://badgen.net/bundlephobia/min/react-photo-view?label=minified
-[gzip-size-image]: https://badgen.net/bundlephobia/minzip/react-photo-view?label=gzip
-[bundlephobia-url]: https://bundlephobia.com/result?p=react-photo-view
+欢迎提交 Issue 和 Pull Request！
