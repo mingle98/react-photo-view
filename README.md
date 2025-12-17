@@ -4,14 +4,9 @@
 
 **一款超精致的 React 图片预览组件**
 
-[![NPM version][npm-image]][npm-url]
-[![Downloads][downloads-image]][downloads-url]
-[![Minified size][min-size-image]][bundlephobia-url]
-[![Gzip size][gzip-size-image]][bundlephobia-url]
-
 ![example](./example.gif)
 
-[在线文档](https://react-photo-view.vercel.app) | [更新日志](https://react-photo-view.vercel.app/docs/change-log) | [English README](./README.md)
+[在线文档](https://react-photo-view.vercel.app) | [更新日志](https://react-photo-view.vercel.app/docs/change-log) | 
 
 </div>
 
